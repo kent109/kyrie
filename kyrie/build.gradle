@@ -1,54 +1,27 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'org.jetbrains.dokka-android'
+plugins {
+    id 'com.android.library'
+}
 
 android {
-    compileSdkVersion rootProject.ext.targetSdkVersion
+    namespace "com.github.alexjlockwood.kyrie"
+    compileSdk 37
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        minSdk 29
+        targetSdk 35
     }
 
-    dokka {
-        outputFormat = 'html'
-        outputDirectory = "$buildDir/javadoc"
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 }
 
 dependencies {
-    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    // Kotlin stdlib is added automatically by AGP 9 built-in Kotlin; declared here so the
+    // library exposes it as an API dependency to consumers.
+    api "org.jetbrains.kotlin:kotlin-stdlib:2.2.0"
     // TODO: depend on appcompat-resources v1.1.0 once it graduates from alpha
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
-}
-
-ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'kyrie'
-
-    publishedGroupId = 'com.github.alexjlockwood'
-    libraryName = 'Kyrie'
-    artifact = 'kyrie'
-
-    libraryDescription = 'Animated Vector Drawables on steroids'
-
-    siteUrl = 'https://github.com/alexjlockwood/kyrie'
-    gitUrl = 'https://github.com/alexjlockwood/kyrie.git'
-
-    libraryVersion = '0.2.1'
-
-    developerId = 'alexjlockwood'
-    developerName = 'Alex Lockwood'
-    developerEmail = 'alexjlockwood@gmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
-
-if (project.rootProject.file('local.properties').exists()) {
-    apply from: '../scripts/publish.gradle'
 }

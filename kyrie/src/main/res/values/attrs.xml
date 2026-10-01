@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!--
+    These declare-styleable blocks intentionally mirror the framework's
+    android.R.styleable.GradientColor / GradientColorItem. They reference the
+    framework attributes via the "android:" prefix, so the generated
+    R.styleable arrays contain the same framework attribute IDs and the
+    inflation code reads the correct android:startX / android:type / ... values.
+    This is needed because some platform android.jar builds ship without
+    android.R$styleable, so android.R.styleable.* cannot be referenced directly.
+  -->
+  <declare-styleable name="GradientColor">
+    <attr name="android:startX" format="float" />
+    <attr name="android:startY" format="float" />
+    <attr name="android:endX" format="float" />
+    <attr name="android:endY" format="float" />
+    <attr name="android:centerX" format="float" />
+    <attr name="android:centerY" format="float" />
+    <attr name="android:type">
+      <enum name="linear" value="0" />
+      <enum name="radial" value="1" />
+      <enum name="sweep" value="2" />
+    </attr>
+    <attr name="android:startColor" format="color" />
+    <attr name="android:centerColor" format="color" />
+    <attr name="android:endColor" format="color" />
+    <attr name="android:tileMode">
+      <enum name="clamp" value="0" />
+      <enum name="repeat" value="1" />
+      <enum name="mirror" value="2" />
+    </attr>
+    <attr name="android:gradientRadius" format="float" />
+  </declare-styleable>
+
+  <declare-styleable name="GradientColorItem">
+    <attr name="android:color" format="color" />
+    <attr name="android:offset" format="float" />
+  </declare-styleable>
+</resources>

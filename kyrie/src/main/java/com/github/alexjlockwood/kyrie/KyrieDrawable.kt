@@ -181,9 +181,10 @@ class KyrieDrawable private constructor(
         }
     }
 
-    override fun setTintMode(tintMode: PorterDuff.Mode) {
-        if (this.tintMode != tintMode) {
-            this.tintMode = tintMode
+    override fun setTintMode(tintMode: PorterDuff.Mode?) {
+        val mode = tintMode ?: PorterDuff.Mode.SRC_IN
+        if (this.tintMode != mode) {
+            this.tintMode = mode
             tintFilter = createTintFilter()
             invalidateSelf()
         }
