@@ -34,4 +34,25 @@ internal class PropertyTimeline(private val drawable: KyrieDrawable) {
     fun setCurrentPlayTime(@IntRange(from = 0) currentPlayTime: Long) {
         properties.forEach { it.setCurrentPlayTime(currentPlayTime) }
     }
+
+    fun recomputeTotalDuration() {
+        totalDuration = 0
+        for (property in properties) {
+            if (totalDuration != Animation.INFINITE) {
+                val currTotalDuration = property.totalDuration
+                totalDuration = if (currTotalDuration == Animation.INFINITE) {
+                    Animation.INFINITE
+                } else {
+                    Math.max(currTotalDuration, totalDuration)
+                }
+            }
+        }
+    }
+
+    internal fun setDuration(durationMs: Long) {
+        for (property in properties) {
+            property.setDuration(durationMs)
+        }
+        recomputeTotalDuration()
+    }
 }

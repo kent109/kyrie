@@ -335,6 +335,20 @@ class KyrieDrawable private constructor(
         animator.resume()
     }
 
+    /**
+     * Sets the duration of all animations in the timeline.
+     * This is useful for synchronizing the animation duration with external events,
+     * such as matching a cassette animation to the remaining playback time of a song.
+     *
+     * @param durationMs The desired duration for each animation in milliseconds.
+     */
+    fun setAnimationDuration(durationMs: Long) {
+        if (durationMs <= 0) return
+        timeline.setDuration(durationMs)
+        val totalDuration = timeline.totalDuration
+        animator.duration = if (totalDuration == Animation.INFINITE) Long.MAX_VALUE else totalDuration
+    }
+
     /** Returns true if the animation is running. */
     override fun isRunning(): Boolean {
         return animator.isRunning

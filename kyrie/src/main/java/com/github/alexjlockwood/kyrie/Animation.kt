@@ -33,7 +33,7 @@ class Animation<T, V> private constructor(
      */
     @IntRange(from = 0L)
     var duration: Long = 300
-        private set
+        internal set
 
     /**
      * Returns the timing interpolator that this animation uses. If null, a [LinearInterpolator]

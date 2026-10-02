@@ -13,7 +13,7 @@ internal class Property<V>(animations: List<Animation<*, V>>) {
     private val listeners = ArrayList<Listener>()
     private var currentPlayTime: Long = 0
 
-    val totalDuration: Long
+    var totalDuration: Long
 
     // Iterate backwards through the list and stop at the first
     // animation that has a start time less than or equal to the
@@ -92,6 +92,31 @@ internal class Property<V>(animations: List<Animation<*, V>>) {
             // TODO: add a computeValue() method or something on Animation?
             notifyListeners()
         }
+    }
+
+    fun recomputeTotalDuration() {
+        var newTotalDuration: Long = 0
+        var i = 0
+        val size = animations.size
+        while (i < size) {
+            val currTotalDuration = animations[i].totalDuration
+            if (currTotalDuration == Animation.INFINITE) {
+                newTotalDuration = Animation.INFINITE
+                break
+            }
+            newTotalDuration = Math.max(currTotalDuration, newTotalDuration)
+            i++
+        }
+        totalDuration = newTotalDuration
+    }
+
+    internal fun setDuration(durationMs: Long) {
+        for (animation in animations) {
+            if (animation.repeatCount == 0L) {
+                animation.duration = durationMs
+            }
+        }
+        recomputeTotalDuration()
     }
 
     fun addListener(listener: Listener) {
