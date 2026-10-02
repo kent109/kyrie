@@ -458,6 +458,14 @@ class KyrieDrawable private constructor(
             override fun onAnimationEnd(animation: Animator) {
                 listeners.forEach { it.onAnimationEnd(drawable) }
             }
+
+            override fun onAnimationPause(animation: Animator) {
+                listeners.forEach { it.onAnimationPause(drawable) }
+            }
+
+            override fun onAnimationResume(animation: Animator) {
+                listeners.forEach { it.onAnimationResume(drawable) }
+            }
         }
 
         init {
@@ -477,33 +485,15 @@ class KyrieDrawable private constructor(
         override fun pause() {
             if (isStarted && !isPaused) {
                 isPaused = true
-                val currentPlayTime = this.playTime
-                cancelWithoutNotify()
-                setCurrentPlayTime(currentPlayTime)
-                listeners.forEach { it.onAnimationPause(drawable) }
+                super.pause()
             }
-        }
-
-        private fun cancelWithoutNotify() {
-            removeListener(listenerAdapter)
-            cancel()
-            addListener(listenerAdapter)
         }
 
         override fun resume() {
             if (isPaused) {
                 isPaused = false
-                val currentPlayTime = this.playTime
-                startWithoutNotify()
-                setCurrentPlayTime(currentPlayTime)
-                listeners.forEach { it.onAnimationResume(drawable) }
+                super.resume()
             }
-        }
-
-        private fun startWithoutNotify() {
-            removeListener(listenerAdapter)
-            start()
-            addListener(listenerAdapter)
         }
 
         override fun isPaused(): Boolean {
